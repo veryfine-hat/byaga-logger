@@ -4,6 +4,12 @@ import {ConfigurationOptions} from './ConfigurationOptions'
 import {StructuredLog} from "./StructuredLog";
 
 export class Logger extends Span {
+  constructor(options?: ConfigurationOptions) {
+    super();
+
+    if (options) this.configure(options);
+  }
+
   write(data: StructuredLog): void {console.log(data)}
 
   configure(options: ConfigurationOptions ) {

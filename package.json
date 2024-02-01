@@ -1,6 +1,6 @@
 {
   "name": "@byaga/logger",
-  "version": "1.0.0-2",
+  "version": "1.0.0-3",
   "description": "Structured logging utility",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",

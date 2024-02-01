@@ -1,0 +1,12 @@
+/node_modules/
+**/*.spec.*
+src
+*.iml
+test-results
+.eslintignore
+.eslintrc.js
+.gitignore
+Dockerfile
+Jenkinsfile
+jest.config.js
+archive

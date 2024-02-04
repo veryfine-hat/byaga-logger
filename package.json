@@ -1,6 +1,6 @@
 {
   "name": "@byaga/logger",
-  "version": "1.0.0-5",
+  "version": "1.0.0-6",
   "description": "'lightweight' structured logging utility for use in the browser",
   "main": "./lib/cjs/index.js",
   "module": "./lib/index.js",

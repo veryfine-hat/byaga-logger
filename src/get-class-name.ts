@@ -1,6 +1,6 @@
-export function getClassName(obj: unknown) {
+export function getClassName(obj: unknown): string {
     // If the object has a constructor and the constructor has a name, return it
-    if (obj && obj.constructor && obj.constructor.name) {
+    if (obj?.constructor?.name) {
         return obj.constructor.name;
     }
 

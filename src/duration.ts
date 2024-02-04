@@ -54,6 +54,5 @@ export function lrDuration(): LowResolutionTimerStopFunction {
  * @returns {Function} - A function that returns the elapsed time in milliseconds.
  */
 export function duration(): TimerStopFunction {
-    // @ts-expect-error - hrtime may not be defined depending on the node/browser version
     return (typeof performance !== 'undefined' && performance.now) ? hrDuration() : lrDuration();
 }

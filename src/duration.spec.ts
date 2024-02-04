@@ -2,43 +2,47 @@ import {duration, hrDuration, lrDuration} from './duration';
 
 jest.useFakeTimers();
 
-jest.mock('process', () => ({
-    hrtime: jest.fn(),
-}));
+// jest.mock('performance', () => ({
+//     now: jest.fn(),
+// }));
 
 describe('hrDuration', () => {
     beforeEach(() => {
         jest.clearAllMocks()
-        jest.spyOn(process, 'hrtime');
+        jest.spyOn(performance, 'now');
     })
+
     it('returns a function that calculates the elapsed time in milliseconds', () => {
-        (process.hrtime as unknown as jest.Mock).mockReturnValueOnce([0, 0]).mockReturnValueOnce([1, 1e6]);
+        (performance.now as unknown as jest.Mock).mockReturnValueOnce(0)
+            .mockReturnValueOnce(1.003);
 
         const stop = hrDuration();
         const elapsed = stop();
 
-        expect(elapsed).toBe(1001);
-        expect(process.hrtime).toHaveBeenCalledTimes(2);
+        expect(elapsed).toBe(1.003);
+        expect(performance.now).toHaveBeenCalledTimes(2);
     });
 
     it('returns a function that calculates the elapsed time in milliseconds with fractional seconds', () => {
-        (process.hrtime as unknown as jest.Mock).mockReturnValueOnce([0, 0]).mockReturnValueOnce([0, 5e6]);
+        (performance.now as unknown as jest.Mock).mockReturnValueOnce(0)
+            .mockReturnValueOnce(0.005);
 
         const stop = hrDuration();
         const elapsed = stop();
 
-        expect(elapsed).toBe(5);
-        expect(process.hrtime).toHaveBeenCalledTimes(2);
+        expect(elapsed).toBe(0.005);
+        expect(performance.now).toHaveBeenCalledTimes(2);
     });
 
     it('returns a function that calculates the elapsed time in milliseconds with multiple seconds', () => {
-        (process.hrtime as unknown as jest.Mock).mockReturnValueOnce([0, 0]).mockReturnValueOnce([3, 0]);
+        (performance.now as unknown as jest.Mock).mockReturnValueOnce(0)
+            .mockReturnValueOnce(3);
 
         const stop = hrDuration();
         const elapsed = stop();
 
-        expect(elapsed).toBe(3000);
-        expect(process.hrtime).toHaveBeenCalledTimes(2);
+        expect(elapsed).toBe(3);
+        expect(performance.now).toHaveBeenCalledTimes(2);
     });
 });
 
@@ -80,13 +84,14 @@ describe('duration', () => {
         jest.spyOn(process, 'hrtime');
     })
     it('returns a function that calculates the elapsed time in milliseconds using hrtime if available', () => {
-        (process.hrtime as unknown as jest.Mock).mockReturnValueOnce([0, 0]).mockReturnValueOnce([1, 1e6]);
+        (performance.now as unknown as jest.Mock).mockReturnValueOnce(0)
+            .mockReturnValueOnce(1 + 1e3);
 
         const stop = duration();
         const elapsed = stop();
 
         expect(elapsed).toBe(1001);
-        expect(process.hrtime).toHaveBeenCalledTimes(2);
+        expect(performance.now).toHaveBeenCalledTimes(2);
     });
 
     it('returns a function that calculates the elapsed time in milliseconds using Date.now if hrtime is not available', () => {

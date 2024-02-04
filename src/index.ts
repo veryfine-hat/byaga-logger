@@ -6,5 +6,5 @@ export {type ConfigurationOptions} from './ConfigurationOptions';
 export {type LogOptions} from './LogOptions';
 
 export {Logger}
-export {duration} from './duration';
+export {duration, hrDuration, lrDuration, type TimerStopFunction, type LowResolutionTimerStopFunction, type HighResolutionTimerStopFunction} from './duration';
 export default Logger;

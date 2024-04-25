@@ -4,6 +4,8 @@ import {ConfigurationOptions} from './ConfigurationOptions'
 import {StructuredLog} from "./StructuredLog";
 
 export class Logger extends Span {
+  timeProperty = 'timestamp';
+
   constructor(options?: ConfigurationOptions) {
     super();
 
@@ -14,10 +16,12 @@ export class Logger extends Span {
 
   configure(options: ConfigurationOptions ) {
     this.write = options.write || this.write;
+    this.timeProperty = options.timeProperty || this.timeProperty;
   }
 
   log(...args: LogParameters): void {
     this.write({
+      [this.timeProperty]: (new Date()).toISOString(),
       ...this.context,
       ...logParamsToData(args)
     });
